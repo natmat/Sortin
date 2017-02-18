@@ -1,11 +1,13 @@
+package sorting;
+
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Sorting {
@@ -24,8 +26,8 @@ public class Sorting {
 		Sorting s = new Sorting();
 		SortingFrame sv = new SortingFrame();
 
-//		ArrayList<Integer> output = s.insertSort();
-//		showArray(output);
+		//		ArrayList<Integer> output = s.insertSort();
+		//		showArray(output);
 	}
 
 	private static void createAndShowGUI() {
@@ -43,30 +45,37 @@ public class Sorting {
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(200, 200);
 			setLocationRelativeTo(null);
+
+			JPanel panel = new JPanel() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public void paintComponent(Graphics g) {
+					super.paintComponent(g);
+					drawHistogram(dataset, g);
+				}
+			};
+			add(panel);
+
 			setVisible(true);
 		}
 
-		@Override
-		public void paint(Graphics g) {
-			super.paint(g);
-			drawHistogram(dataset, g);
-		}
-
 		private void drawHistogram(final ArrayList<Integer>a, Graphics g) {
-			Graphics2D g2 = (Graphics2D)g;
-			g2.setColor(Color.RED);
+			System.out.println("drawHistogram");
+			
+			g.setColor(Color.RED);
+			
 			double step = ((double)getWidth())/a.size();
 			double range = ((double)getHeight())/RANGE_OF_DATASET;
 
 			double x = 0f;
 			for (Integer i : a) {
 				int height = (int) (range*i.intValue());
-				g2.fillRect((int)(x+step/2), getHeight()-height, (int)step, height); 
+				g.fillRect((int)(x+step/2), getHeight()-height, (int)step, height); 
 				x += step;
 			}
 		}
 	}
-	
+
 
 	private static void showArray(final List<Integer> arr) {
 		for (int i = 0; i < arr.size() ; i++) {
