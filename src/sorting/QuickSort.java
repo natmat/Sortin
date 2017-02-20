@@ -19,8 +19,14 @@ public class QuickSort implements ISort {
 	 * @return
 	 */
 	private ArrayList<Integer> sort(ArrayList<Integer> dataset, int low, int high) {
+		System.out.println("sort:" + low + "," + high);
 		if (low < high) {
-			partition(dataset, low, high);
+			int p = partition(dataset, low, high);
+			sort(dataset, low, p-1);
+			sort(dataset, p+1, high);
+		}
+		else {
+			System.out.println("***");
 		}
 		return(dataset);
 	}
@@ -33,15 +39,38 @@ public class QuickSort implements ISort {
 	 * @return
 	 */
 	private int partition(ArrayList<Integer>dataset, int low, int high) {
+		assert (low < high);
 		int pivot = dataset.get(high); // pivot on last
-		int i = low - 1;
+		System.out.println("partition " + low + "-" + high + ":p=" + pivot);
+		Sorting.printArray(dataset);
+		
+		int i = low;
 		for (int j = low ; j < high ; j++) {
+			System.out.println("> " + dataset.get(j));
 			if (dataset.get(j) <= pivot) {
-				i++;
-				swapArrayElements(dataset, i, j);
+				System.out.println("<");
+				swapArrayElements(dataset, i++, j);
+				Sorting.printArray(dataset);
+				
+				Sorting.refresh();
+				try {
+					Thread.sleep(Sorting.REFRESH_INTERVAL);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
-		return high;
+		swapArrayElements(dataset, i+1, high);
+		try {
+			Thread.sleep(Sorting.REFRESH_INTERVAL);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Sorting.refresh();
+		
+		return (i+1);
 	}
 
 	private void swapArrayElements(ArrayList<Integer> a, int i, int j) {

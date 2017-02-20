@@ -4,21 +4,26 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Sorting {
 	private final static int RANGE_OF_DATASET = 100;
-	private final static int SIZE_OF_DATASET = 100;
+	private final static int SIZE_OF_DATASET = 10;
 	private static ArrayList<Integer> dataset;
 	private static JFrame frame;
 	private static SortingPanel panel;
+	public final static int REFRESH_INTERVAL = 2000; 
 
 	public static void main(String[] args) 
 			throws InterruptedException, InvocationTargetException {
@@ -31,21 +36,35 @@ public class Sorting {
 		Sorting s = new Sorting();
 		s.generateRandomDataset();
 
-		ArrayList<Integer> output = null;		
-
-		output = new InsertionSort().sort(dataset);
-		printArray(output);
-
-//		output = new QuickSort().sort(dataset);
+//		output = new InsertionSort().sort(dataset);
 //		printArray(output);
+
+		sortTheDataset();
 		
-		frame.dispose();
+//		frame.dispose();
+	}
+
+	private static void sortTheDataset() {
+		System.out.println("Sort the dataset");
+		ArrayList<Integer> output = new QuickSort().sort(dataset);
+		printArray(output);
 	}
 
 	private static class SortingPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
+		JButton sortButton = new JButton();
 		
 		public SortingPanel() {			
+			sortButton.setText("Sort");
+			sortButton.setActionCommand("sort");
+			sortButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					sortTheDataset();
+				}
+			});
+			
+			this.add(sortButton);
 		}
 		
 		@Override
@@ -89,12 +108,11 @@ public class Sorting {
 			g.fillRect((int)(x+step/2), frame.getHeight()-height, (int)step, height); 
 			x += step;
 		}
-		Sorting.refresh();
 	}
 
 	public static void printArray(final List<Integer> arr) {
 		for (int i = 0; i < arr.size() ; i++) {
-			System.out.print(arr.get(i) + " ");
+			System.out.print(arr.get(i) + ",");
 		}
 		System.out.println();
 	}
@@ -104,10 +122,14 @@ public class Sorting {
 		Random rand = new Random();
 		for (int i = 0 ; i < SIZE_OF_DATASET ; i++) {
 			int r = rand.nextInt(RANGE_OF_DATASET);
-			System.out.print(r + ",");
+//			System.out.print(r + ",");
 			dataset.add(i,  r);
 		}
 		System.out.println("\n");
+		ArrayList<Integer> a = new ArrayList<>(
+				Arrays.asList(77,58,37,78,53,13,64,15,35,23));
+		dataset = a;
+		printArray(dataset);
 	}
 }
 

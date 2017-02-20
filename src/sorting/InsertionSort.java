@@ -10,9 +10,6 @@ public class InsertionSort implements ISort {
 	public ArrayList<Integer> sort(final ArrayList<Integer> inDataset) throws InterruptedException {
 		dataset = inDataset;
 		for (int i = 1 ; i < dataset.size() ; i++) {
-//			System.out.print("\nTesting " + dataset.get(i) + ": ");
-//			Sorting.printArray(dataset);
-			
 			int j = i;
 			while (j > 0) {
 				if (dataset.get(j) < dataset.get(j-1)) {
@@ -20,7 +17,7 @@ public class InsertionSort implements ISort {
 				}
 				j--;
 			}
-			Thread.sleep(50);
+			Thread.sleep(Sorting.REFRESH_INTERVAL);
 			Sorting.refresh();
 		}
 		Sorting.refresh();
