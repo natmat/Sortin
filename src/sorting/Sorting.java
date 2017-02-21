@@ -23,7 +23,7 @@ public class Sorting {
 	private static ArrayList<Integer> dataset;
 	private static JFrame frame;
 	private static SortingPanel panel;
-	public final static int REFRESH_INTERVAL = 2000; 
+	public final static int REFRESH_INTERVAL = 500; 
 
 	public static void main(String[] args) 
 			throws InterruptedException, InvocationTargetException {
@@ -74,7 +74,7 @@ public class Sorting {
 		}
 		
 		public Dimension getPreferredSize() {
-	        return new Dimension(800,200);
+	        return new Dimension(400,200);
 		}
 	}
 	
