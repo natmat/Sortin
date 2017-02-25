@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
 
 public class Sorting {
 	private final static int RANGE_OF_DATASET = 100;
-	private final static int SIZE_OF_DATASET = 5;
+	private final static int SIZE_OF_DATASET = 10;
 	private static ArrayList<Integer> dataset;
 	private static JFrame frame;
 	private static SortingPanel panel;
@@ -127,10 +127,10 @@ public class Sorting {
 		}
 		System.out.println("\n");
 		
-//		ArrayList<Integer> a = new ArrayList<>(
-//				Arrays.asList(77,58,37,78,53,13,64,15,35,23));
-//		dataset = a;
-//		printArray(dataset);
+		ArrayList<Integer> a = new ArrayList<>(
+				Arrays.asList(77,58,37,78,53,13,64,15,35,23));
+		dataset = a;
+		printArray(dataset);
 	}
 }
 
