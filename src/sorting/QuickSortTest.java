@@ -2,34 +2,30 @@ package sorting;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class QuickSortTest {
+    @Before
+    public void executedBeforeEach() {
+        System.out.println("@Before: executedBeforeEach");
+    }
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+    @Test
+	public void testPartitionHoare_setOfTwo() {
+		ArrayList<Integer> dataset = 
+				new ArrayList<>(Arrays.asList(1,2));
+		final int mid = QuickSort.partitionHoare(dataset, 0, 1);
+		assertEquals(0, mid);
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	public void testPartitionHoare_setOfOne() {
+		ArrayList<Integer> dataset = 
+				new ArrayList<>(Arrays.asList(1));
+		final int mid = QuickSort.partitionHoare(dataset, 0, 0);
+		assertEquals(1, mid);
 	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testPartitionHoare() {
-		assertThat("nathan", is(equalTo("nathan")));
-		fail("Not yet implemented");
-	}
-
 }

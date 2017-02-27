@@ -19,11 +19,11 @@ import javax.swing.SwingUtilities;
 
 public class Sorting {
 	private final static int RANGE_OF_DATASET = 100;
-	private final static int SIZE_OF_DATASET = 10;
+	private final static int SIZE_OF_DATASET = 20;
 	private static ArrayList<Integer> dataset;
 	private static JFrame frame;
 	private static SortingPanel panel;
-	public final static int REFRESH_INTERVAL = 1000; 
+	public final static int REFRESH_INTERVAL = 20; 
 
 	public static void main(String[] args) 
 			throws InterruptedException, InvocationTargetException {
@@ -122,14 +122,12 @@ public class Sorting {
 		Random rand = new Random();
 		for (int i = 0 ; i < SIZE_OF_DATASET ; i++) {
 			int r = rand.nextInt(RANGE_OF_DATASET);
-//			System.out.print(r + ",");
 			dataset.add(i,  r);
 		}
-		System.out.println("\n");
 		
-		ArrayList<Integer> a = new ArrayList<>(
-				Arrays.asList(77,58,37,78,53,13,64,15,35,23));
-		dataset = a;
+//		ArrayList<Integer> a = new ArrayList<>(
+//				Arrays.asList(77,58,37,78,53,13,64,15,35,23));
+//		dataset = a;
 		printArray(dataset);
 	}
 }

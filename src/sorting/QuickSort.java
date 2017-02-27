@@ -7,8 +7,8 @@ public class QuickSort implements ISort {
 	@Override
 	public ArrayList<Integer> sort(final ArrayList<Integer> dataset) {
 		ArrayList<Integer> output = dataset;
+		//		output = dataset;
 		//		quicksort1(output, 0, output.size()-1);
-		//
 		//		output = dataset;
 		//		quicksort2(output, 0, output.size()-1);
 
@@ -19,11 +19,11 @@ public class QuickSort implements ISort {
 	}
 
 	private void quicksortHoare(ArrayList<Integer>dataset, int first, int last) {
-		System.out.println("QuicksortHoare:" + first + "," + last);
+		System.out.println("QSH:" + first + "," + last + " ");
 		if (first < last) {
 			final int mid = partitionHoare(dataset, first, last);
-			quicksortHoare(dataset, first, mid);
-			quicksortHoare(dataset, mid+1, last);
+			quicksortHoare(dataset, first, mid-1);
+			quicksortHoare(dataset, mid, last);
 		}
 	}
 
@@ -32,27 +32,24 @@ public class QuickSort implements ISort {
 		final int pivot = dataset.get(last); 
 		System.out.println("> partitionHoare:" + first + "," + last + ":" + pivot);
 		Sorting.printArray(dataset);
-		
+
 		int leftCursor = first-1;
 		int rightCursor = last+1;
 
 		while(leftCursor < rightCursor) {
-			do {
-				--rightCursor;
-			} while (dataset.get(rightCursor) >= pivot);
+			while (dataset.get(++leftCursor) < pivot);
 
-			do {
-				++leftCursor;
-			} while (dataset.get(leftCursor) < pivot);
+			while ((rightCursor > leftCursor) && 
+					(pivot < dataset.get(--rightCursor)));
 
-			if (leftCursor < rightCursor) {
-				swapArrayElements(dataset, leftCursor, rightCursor);
-				Sorting.printArray(dataset);
-			}
-			else {
+			if (leftCursor >= rightCursor) {
 				break;
 			}
+
+			swapArrayElements(dataset, leftCursor, rightCursor);
+			Sorting.printArray(dataset);
 		}
+		
 		return(rightCursor);
 	}
 
