@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class QuickSort implements ISort {
 
 	@Override
-	public ArrayList<Integer> sort(final ArrayList<Integer> dataset) {
-		ArrayList<Integer> output = dataset;
+	public ArrayList<Integer> sort(DataSet dataset) {
+		DataSet output = dataset;
 		//		output = dataset;
 		//		quicksort1(output, 0, output.size()-1);
 		//		output = dataset;
@@ -14,11 +14,11 @@ public class QuickSort implements ISort {
 
 		output = dataset;
 		Sorting.printArray(dataset);
-		quicksortHoare(output, 0, output.size()-1);
-		return(output);
+		quicksortHoare(output, 0, output.data.size()-1);
+		return(output.data);
 	}
 
-	private void quicksortHoare(ArrayList<Integer>dataset, int first, int last) {
+	private void quicksortHoare(DataSet dataset, int first, int last) {
 		System.out.println("QSH:" + first + "," + last + " ");
 		if (first < last) {
 			final int mid = partitionHoare(dataset, first, last);
@@ -27,9 +27,8 @@ public class QuickSort implements ISort {
 		}
 	}
 
-	protected static int partitionHoare(
-			ArrayList<Integer>dataset, int first,int last){
-		final int pivot = dataset.get(last); 
+	protected static int partitionHoare(DataSet dataset, int first,int last){
+		final int pivot = dataset.data.get(last); 
 		System.out.println("> partitionHoare:" + first + "," + last + ":" + pivot);
 		Sorting.printArray(dataset);
 
@@ -37,10 +36,9 @@ public class QuickSort implements ISort {
 		int rightCursor = last+1;
 
 		while(leftCursor < rightCursor) {
-			while (dataset.get(++leftCursor) < pivot);
+			while (dataset.data.get(++leftCursor) < pivot);
 
-			while ((rightCursor > leftCursor) && 
-					(pivot < dataset.get(--rightCursor)));
+			while (pivot < dataset.data.get(--rightCursor));
 
 			if (leftCursor >= rightCursor) {
 				break;
@@ -64,7 +62,7 @@ public class QuickSort implements ISort {
 	private ArrayList<Integer> quicksort1(ArrayList<Integer> dataset, int low, int high) {
 		System.out.println("sort:" + low + "," + high);
 		if (low < high) {
-			int p = partition(dataset, low, high);
+			int p = partition(dataset.data, low, high);
 			quicksort1(dataset, low, p-1);
 			quicksort1(dataset, p+1, high);
 		}
@@ -81,11 +79,11 @@ public class QuickSort implements ISort {
 	 * @param high highest index in a
 	 * @return
 	 */
-	private int partition(ArrayList<Integer>dataset, int low, int high) {
+	private int partition(DataSet dataset, int low, int high) {
 		assert (low < high);
-		final int pivot = dataset.get(high); // pivot on last
+		final int pivot = dataset.data.get(high); // pivot on last
 		System.out.println("partition " + low + "-" + high + ":p=" + pivot);
-		Sorting.printArray(dataset);
+		Sorting.printArray(dataset.data);
 
 		int i = low-1;
 		for (int j = low ; j < high-1 ; j++) {
@@ -99,18 +97,10 @@ public class QuickSort implements ISort {
 		Sorting.printArray(dataset);
 		System.out.println("Return " + i);
 
-		try {
-			Thread.sleep(Sorting.REFRESH_INTERVAL);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Sorting.refresh();
-
 		return (i);
 	}
 
-	private static void pause(ArrayList<Integer> dataset) {
+	private static void pause(DataSet dataset, int i, int j) {
 		Sorting.refresh();
 		try {
 			Thread.sleep(Sorting.REFRESH_INTERVAL);
@@ -120,12 +110,13 @@ public class QuickSort implements ISort {
 		}
 	}
 
-	private static void swapArrayElements(ArrayList<Integer> dataset, int i, int j) {
-		int tmp = dataset.get(i);
-		dataset.set(i, dataset.get(j));
-		dataset.set(j, tmp);
+	private static void swapArrayElements(DataSet dataset, int i, int j) {
+		Sorting.refresh();
+		int tmp = dataset.data.get(i);
+		dataset.data.set(i, dataset.data.get(j));
+		dataset.data.set(j, tmp);
 
-		pause(dataset);
+		pause(dataset, i, j);
 	}
 
 	private void quicksort2(ArrayList<Integer>a, int p, int r) {
@@ -142,8 +133,8 @@ public class QuickSort implements ISort {
 	// Works by selecting the original value of a[r] as the pivot element and
 	// partitioning a[p..r] around the pivot.
 	// Returns the value of q that marks the partition.
-	protected int partition1(ArrayList<Integer>dataset, int p, int r) {
-		int pivot = dataset.get(r);        // the value we pivot around
+	protected int partition1(DataSet dataset, int p, int r) {
+		int pivot = dataset.data.get(r);        // the value we pivot around
 		int i = p - 1;                  // i is index into left side
 
 		// The following for loop maintains the following invariants:
@@ -155,7 +146,7 @@ public class QuickSort implements ISort {
 			// to increment the size of the left side and then get a[j] into position i.
 			// If the right side, a[j] is already where we want it, so just incrementing
 			// j in the loop header suffices.
-			if (dataset.get(i) < pivot) { 	// which side does a[j] go into?
+			if (dataset.data.get(i) < pivot) { 	// which side does a[j] go into?
 				i++;                    // if left side, make it one larger...
 				swapArrayElements(dataset, i, j);          // ...and get a[j] into the left side
 			}
