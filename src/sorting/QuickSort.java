@@ -59,17 +59,16 @@ public class QuickSort implements ISort {
 	 * @param high upper bound index 
 	 * @return
 	 */
-	private ArrayList<Integer> quicksort1(ArrayList<Integer> dataset, int low, int high) {
+	private void quicksort1(DataSet dataset, int low, int high) {
 		System.out.println("sort:" + low + "," + high);
 		if (low < high) {
-			int p = partition(dataset.data, low, high);
+			int p = partition(dataset, low, high);
 			quicksort1(dataset, low, p-1);
 			quicksort1(dataset, p+1, high);
 		}
 		else {
 			System.out.println("***");
 		}
-		return(dataset);
 	}
 
 	/**

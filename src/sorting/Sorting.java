@@ -34,9 +34,8 @@ public class Sorting {
 				createAndShowGUI();
 			}
 		});
+		
 		Sorting s = new Sorting();
-		s.data.
-		s.generateRandomDataset();
 
 		//		output = new InsertionSort().sort(dataset);
 		//		printArray(output);
@@ -51,7 +50,7 @@ public class Sorting {
 		data.newRandomSet();
 	}
 
-	private static void sortTheDataset() {
+	private void sortTheDataset() {
 		System.out.println("Sort the dataset");
 		DataSet output = new QuickSort().sort(data);
 		printArray(output);
@@ -117,13 +116,12 @@ public class Sorting {
 			x += step;
 		}
 
-		drawSwapLines(g,1,2);
+//		drawSwapLines(g,1,2);
 	}
 
 	public static void printArray(final DataSet dataset) {
-		final ArrayList<Integer>arr = dataset.data;
-		for (int i = 0; i < arr.size() ; i++) {
-			System.out.print(arr.get(i) + ",");
+		for (int i = 0; i < dataset.data.size() ; i++) {
+			System.out.print(dataset.data.get(i) + ",");
 		}
 		System.out.println();
 	}
