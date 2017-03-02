@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 public class QuickSort implements ISort {
 
-	@Override
-	public ArrayList<Integer> sort(DataSet dataset) {
+	public DataSet sort(DataSet dataset) {
 		DataSet output = dataset;
-		//		output = dataset;
-		//		quicksort1(output, 0, output.size()-1);
-		//		output = dataset;
-		//		quicksort2(output, 0, output.size()-1);
+		
+//		output = dataset;
+//		quicksort1(output, 0, output.size()-1);
+//		output = dataset;
+//		quicksort2(output, 0, output.size()-1);
 
 		output = dataset;
-		Sorting.printArray(dataset);
+		Sorting.printArray(dataset.data);
 		quicksortHoare(output, 0, output.data.size()-1);
-		return(output.data);
+		return(output);
 	}
 
 	private void quicksortHoare(DataSet dataset, int first, int last) {
@@ -30,7 +30,7 @@ public class QuickSort implements ISort {
 	protected static int partitionHoare(DataSet dataset, int first,int last){
 		final int pivot = dataset.data.get(last); 
 		System.out.println("> partitionHoare:" + first + "," + last + ":" + pivot);
-		Sorting.printArray(dataset);
+		Sorting.printArray(dataset.data);
 
 		int leftCursor = first-1;
 		int rightCursor = last+1;
@@ -45,7 +45,7 @@ public class QuickSort implements ISort {
 			}
 
 			swapArrayElements(dataset, leftCursor, rightCursor);
-			Sorting.printArray(dataset);
+			Sorting.printArray(dataset.data);
 		}
 		
 		return(rightCursor);
@@ -86,14 +86,14 @@ public class QuickSort implements ISort {
 
 		int i = low-1;
 		for (int j = low ; j < high-1 ; j++) {
-			System.out.println("? " + dataset.get(j));
-			if (dataset.get(j) < pivot) {
+			System.out.println("? " + dataset.data.get(j));
+			if (dataset.data.get(j) < pivot) {
 				System.out.println("<");
 				swapArrayElements(dataset, ++i, j);
 			}
 		}
 		swapArrayElements(dataset, ++i, high);
-		Sorting.printArray(dataset);
+		Sorting.printArray(dataset.data);
 		System.out.println("Return " + i);
 
 		return (i);
@@ -118,11 +118,11 @@ public class QuickSort implements ISort {
 		pause(dataset, i, j);
 	}
 
-	private void quicksort2(ArrayList<Integer>a, int p, int r) {
+	private void quicksort2(DataSet data, int p, int r) {
 		if (p < r) {              		// nothing to do if the subarray has fewer than 2 elements
-			int q = partition(a, p, r); // q is pivot position
-			quicksort2(a, p, q-1);       // recursively sort a[p..q-1]
-			quicksort2(a, q+1, r);       // recursively sort a[q+1..r]
+			int q = partition(data, p, r); // q is pivot position
+			quicksort2(data, p, q-1);       // recursively sort a[p..q-1]
+			quicksort2(data, q+1, r);       // recursively sort a[q+1..r]
 		}
 	}
 
@@ -157,7 +157,7 @@ public class QuickSort implements ISort {
 		// have what we want: a[p..i] is less than or equal to the pivot, a[i+1]
 		// equals the pivot, and a[i+2..r] is greater than the pivot.
 		swapArrayElements(dataset, i+1, r);
-		Sorting.printArray(dataset);
+		Sorting.printArray(dataset.data);
 
 		// Return the index of where the pivot ended up.
 		return i+1;

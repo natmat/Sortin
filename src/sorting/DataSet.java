@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class DataSet {
+	private final static int RANGE_OF_DATASET = 100;
+	private static int dataSize;
 	ArrayList<Integer> data;
 	private int swapLow;
 
@@ -28,7 +30,7 @@ public class DataSet {
 	private int range;
 
 	public DataSet() {
-		range = 0;
+		range = RANGE_OF_DATASET;
 		swapLow = 0;
 		swapHigh = 0;
 	}
@@ -39,7 +41,10 @@ public class DataSet {
 	}
 	
 	public DataSet(int size) {
-		data = new ArrayList<>(size);
+		this();
+		dataSize = size;
+		data = new ArrayList<>(dataSize);
+		newRandomSet();
 	}
 
 	public DataSet(int size, int range) {
@@ -48,7 +53,7 @@ public class DataSet {
 
 	public void newRandomSet() {
 		Random rand = new Random();
-		for (int i = 0 ; i < data.size(); i++) {
+		for (int i = 0 ; i < dataSize; i++) {
 			int r = rand.nextInt(this.range);
 			data.add(i,  r);
 		}

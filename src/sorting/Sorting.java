@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,13 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Sorting {	
-	private final static int RANGE_OF_DATASET = 100;
-	private final static int SIZE_OF_DATASET = 200;
-	private static ArrayList<Integer> dataset;
+	private final static int SIZE_OF_DATASET = 20;
 	private static JFrame frame;
 	private static SortingPanel panel;
 	public final static int REFRESH_INTERVAL = 20; 
-	private DataSet data;
+	private static DataSet dataset;
 
 	public static void main(String[] args) 
 			throws InterruptedException, InvocationTargetException {
@@ -37,47 +36,69 @@ public class Sorting {
 		
 		Sorting s = new Sorting();
 
-		//		output = new InsertionSort().sort(dataset);
-		//		printArray(output);
+//		output = new InsertionSort().sort(dataset);
+//		printArray(output);
 
-		sortTheDataset();
+//		s.sortDataset();
 
-		//		frame.dispose();
+//		frame.dispose();
 	}
 
 	public Sorting() {
-		data = new DataSet();
-		data.newRandomSet();
+		newDataset();
 	}
 
-	private void sortTheDataset() {
+	private static void sortDataset() {
 		System.out.println("Sort the dataset");
-		DataSet output = new QuickSort().sort(data);
-		printArray(output);
+		DataSet output = new QuickSort().sort(dataset);
+		printArray(output.data);
 	}
 
 	private static class SortingPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
-		JButton sortButton = new JButton();
+		SortButton sortButton;
 
 		public SortingPanel() {	
 			this.setPreferredSize(new Dimension(1000, 800));
-			sortButton.setText("Sort");
-			sortButton.setActionCommand("sort");
+			sortButton = new SortButton();
 			sortButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					sortTheDataset();
+					System.out.println("SortButton pressed");
+					sortButton.pressed();
 				}
 			});
 
 			this.add(sortButton);
 		}
+		
+		private static class SortButton extends JButton {
+			private static final long serialVersionUID = 1L;
+			private static boolean state;
+			
+			public SortButton() {
+				state = false;
+				setText("New Data");
+			}
+			
+			private void pressed() {
+				if (state == false) {				
+					setText("Sort");
+					state = true;
+					Sorting.newDataset();
+				}
+				else {
+					setText("New Data");
+					state = false;
+					Sorting.sortDataset();
+				}
+			}
+		}
 
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			drawHistogram(data);
+			drawHistogram(g);
 		}
 
 		public Dimension getPreferredSize() {
@@ -103,14 +124,14 @@ public class Sorting {
 		frame.setVisible(true);
 	}
 
-	static void drawHistogram(final ArrayList<Integer>a, Graphics g) {
+	private static void drawHistogram(Graphics g) {
 		g.setColor(Color.RED);
 
-		double step = ((double)frame.getWidth())/a.size();
-		double range = ((double)frame.getHeight())/RANGE_OF_DATASET;
+		double step = ((double)frame.getWidth())/dataset.data.size();
+		double range = ((double)frame.getHeight())/dataset.getRange();
 
 		double x = 0f;
-		for (Integer i : a) {
+		for (Integer i : dataset.data) {
 			int height = (int) (range*i.intValue());
 			g.fillRect((int)(x+step/2), frame.getHeight()-height, (int)step, height); 
 			x += step;
@@ -119,9 +140,9 @@ public class Sorting {
 //		drawSwapLines(g,1,2);
 	}
 
-	public static void printArray(final DataSet dataset) {
-		for (int i = 0; i < dataset.data.size() ; i++) {
-			System.out.print(dataset.data.get(i) + ",");
+	public static void printArray(final ArrayList<Integer> array) {
+		for (int i = 0; i < array.size() ; i++) {
+			System.out.print(array.get(i) + ",");
 		}
 		System.out.println();
 	}
@@ -141,5 +162,11 @@ public class Sorting {
 		g.fillRect((int)(high+ step/2), frame.getHeight() - (int)(range*dataset.getSwapHigh()), 
 				(int)step, dataset.data.get(high)); 
 	}
+	
+	private static void newDataset() {
+		dataset = new DataSet(SIZE_OF_DATASET);
+		dataset.newRandomSet();
+		refresh();
+	}		
 }
 

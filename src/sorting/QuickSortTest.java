@@ -16,15 +16,15 @@ public class QuickSortTest {
 
     @Test
 	public void testPartitionHoare_setOfTwo() {
-		ArrayList<Integer> dataset = 
-				new ArrayList<>(Arrays.asList(1,2));
+		DataSet dataset = new DataSet();
+		dataset.data = new ArrayList<>(Arrays.asList(1,2));
 		final int mid = QuickSort.partitionHoare(dataset, 0, 1);
 		assertEquals(0, mid);
 	}
 
 	public void testPartitionHoare_setOfOne() {
-		ArrayList<Integer> dataset = 
-				new ArrayList<>(Arrays.asList(1));
+		DataSet dataset = new DataSet();
+		dataset.data = new ArrayList<>(Arrays.asList(1));
 		final int mid = QuickSort.partitionHoare(dataset, 0, 0);
 		assertEquals(1, mid);
 	}

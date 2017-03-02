@@ -1,7 +1,5 @@
 package sorting;
 
-import java.util.ArrayList;
-
 public interface ISort {
 
 	/**
@@ -10,6 +8,6 @@ public interface ISort {
 	 * @return sorted dataset
 	 * @throws InterruptedException
 	 */
-	ArrayList<Integer> sort(final ArrayList<Integer> dataset) throws InterruptedException;
+	DataSet sort(final DataSet dataset) throws InterruptedException;
 	
 }
