@@ -6,23 +6,18 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Sorting {	
-	private final static int SIZE_OF_DATASET = 20;
+	private final static int SIZE_OF_DATASET = 100;
 	private static JFrame frame;
 	private static SortingPanel panel;
-	public final static int REFRESH_INTERVAL = 20; 
+	public final static int REFRESH_INTERVAL = 50; 
 	private static DataSet dataset;
 
 	public static void main(String[] args) 
@@ -33,81 +28,34 @@ public class Sorting {
 				createAndShowGUI();
 			}
 		});
-		
+
 		Sorting s = new Sorting();
 
-//		output = new InsertionSort().sort(dataset);
-//		printArray(output);
+		//		output = new InsertionSort().sort(dataset);
+		//		printArray(output);
 
-//		s.sortDataset();
-
-//		frame.dispose();
+		//		s.sortDataset();
+		//		frame.dispose();
 	}
 
 	public Sorting() {
 		newDataset();
 	}
 
-	private static void sortDataset() {
+	static void sortDataset() {
 		System.out.println("Sort the dataset");
-		DataSet output = new QuickSort().sort(dataset);
-		printArray(output.data);
-	}
+		new Thread(new Runnable() {
 
-	private static class SortingPanel extends JPanel {
-		private static final long serialVersionUID = 1L;
-		SortButton sortButton;
-
-		public SortingPanel() {	
-			this.setPreferredSize(new Dimension(1000, 800));
-			sortButton = new SortButton();
-			sortButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.out.println("SortButton pressed");
-					sortButton.pressed();
-				}
-			});
-
-			this.add(sortButton);
-		}
-		
-		private static class SortButton extends JButton {
-			private static final long serialVersionUID = 1L;
-			private static boolean state;
-			
-			public SortButton() {
-				state = false;
-				setText("New Data");
+			@Override
+			public void run() {
+				DataSet output = new QuickSort().sort(dataset);
+				printArray(output.data);
 			}
-			
-			private void pressed() {
-				if (state == false) {				
-					setText("Sort");
-					state = true;
-					Sorting.newDataset();
-				}
-				else {
-					setText("New Data");
-					state = false;
-					Sorting.sortDataset();
-				}
-			}
-		}
-
-		@Override
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			drawHistogram(g);
-		}
-
-		public Dimension getPreferredSize() {
-			return new Dimension(400,200);
-		}
+		}).start();
 	}
 
 	public static void refresh() {
-		frame.repaint();
+		panel.repaint();
 	}
 
 	private static void createAndShowGUI() {
@@ -124,7 +72,7 @@ public class Sorting {
 		frame.setVisible(true);
 	}
 
-	private static void drawHistogram(Graphics g) {
+	static void drawHistogram(Graphics g) {
 		g.setColor(Color.RED);
 
 		double step = ((double)frame.getWidth())/dataset.data.size();
@@ -137,7 +85,7 @@ public class Sorting {
 			x += step;
 		}
 
-//		drawSwapLines(g,1,2);
+		//		drawSwapLines(g,1,2);
 	}
 
 	public static void printArray(final ArrayList<Integer> array) {
@@ -162,8 +110,8 @@ public class Sorting {
 		g.fillRect((int)(high+ step/2), frame.getHeight() - (int)(range*dataset.getSwapHigh()), 
 				(int)step, dataset.data.get(high)); 
 	}
-	
-	private static void newDataset() {
+
+	static void newDataset() {
 		dataset = new DataSet(SIZE_OF_DATASET);
 		dataset.newRandomSet();
 		refresh();

@@ -1,7 +1,5 @@
 package sorting;
 
-import java.util.ArrayList;
-
 public class QuickSort implements ISort {
 
 	public DataSet sort(DataSet dataset) {
@@ -23,14 +21,14 @@ public class QuickSort implements ISort {
 		if (first < last) {
 			final int mid = partitionHoare(dataset, first, last);
 			quicksortHoare(dataset, first, mid-1);
-			quicksortHoare(dataset, mid, last);
+			quicksortHoare(dataset, mid+1, last);
 		}
 	}
 
 	protected static int partitionHoare(DataSet dataset, int first,int last){
 		final int pivot = dataset.data.get(last); 
 		System.out.println("> partitionHoare:" + first + "," + last + ":" + pivot);
-		Sorting.printArray(dataset.data);
+//		Sorting.printArray(dataset.data);
 
 		int leftCursor = first-1;
 		int rightCursor = last+1;
@@ -40,12 +38,12 @@ public class QuickSort implements ISort {
 
 			while (pivot < dataset.data.get(--rightCursor));
 
-			if (leftCursor >= rightCursor) {
+			if (leftCursor > rightCursor) {
 				break;
 			}
 
 			swapArrayElements(dataset, leftCursor, rightCursor);
-			Sorting.printArray(dataset.data);
+//			Sorting.printArray(dataset.data);
 		}
 		
 		return(rightCursor);

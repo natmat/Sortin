@@ -52,6 +52,7 @@ public class DataSet {
 	}
 
 	public void newRandomSet() {
+		data.clear();
 		Random rand = new Random();
 		for (int i = 0 ; i < dataSize; i++) {
 			int r = rand.nextInt(this.range);
