@@ -58,6 +58,7 @@ public class DataSet {
 			int r = rand.nextInt(this.range);
 			data.add(i,  r);
 		}
+//		newFixedDataset();
 	}
 
 	public int getRange() {

@@ -18,6 +18,7 @@ public class QuickSort implements ISort {
 
 	private void quicksortHoare(DataSet dataset, int first, int last) {
 		System.out.println("QSH:" + first + "," + last + " ");
+		Sorting.printArray(dataset.data);
 		if (first < last) {
 			final int mid = partitionHoare(dataset, first, last);
 			quicksortHoare(dataset, first, mid-1);
@@ -31,21 +32,23 @@ public class QuickSort implements ISort {
 //		Sorting.printArray(dataset.data);
 
 		int leftCursor = first-1;
-		int rightCursor = last+1;
+		int rightCursor = last;
 
 		while(leftCursor < rightCursor) {
 			while (dataset.data.get(++leftCursor) < pivot);
 
-			while (pivot < dataset.data.get(--rightCursor));
+			while ((leftCursor < rightCursor) && (pivot < dataset.data.get(--rightCursor)));
 
-			if (leftCursor > rightCursor) {
+			if (leftCursor >= rightCursor) {
+				swapArrayElements(dataset, leftCursor, last);
 				break;
 			}
 
 			swapArrayElements(dataset, leftCursor, rightCursor);
-//			Sorting.printArray(dataset.data);
+			Sorting.printArray(dataset.data);
 		}
 		
+		System.out.println("pH:l=" + leftCursor + ",r=" + rightCursor);
 		return(rightCursor);
 	}
 

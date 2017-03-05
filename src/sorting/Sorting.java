@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Sorting {	
-	private final static int SIZE_OF_DATASET = 100;
+	private final static int SIZE_OF_DATASET = 50;
 	private static JFrame frame;
 	private static SortingPanel panel;
-	public final static int REFRESH_INTERVAL = 50; 
+	public final static int REFRESH_INTERVAL = 100; 
 	private static DataSet dataset;
 
 	public static void main(String[] args) 
