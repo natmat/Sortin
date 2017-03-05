@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Sorting {	
-	private final static int SIZE_OF_DATASET = 50;
+	private final static int SIZE_OF_DATASET = 100;
 	private static JFrame frame;
 	private static SortingPanel panel;
-	public final static int REFRESH_INTERVAL = 100; 
+	public final static int REFRESH_INTERVAL = 500; 
 	private static DataSet dataset;
 
 	public static void main(String[] args) 
@@ -29,7 +29,8 @@ public class Sorting {
 			}
 		});
 
-		Sorting s = new Sorting();
+//		Sorting s = new Sorting();
+		Sorting.newDataset();
 
 		//		output = new InsertionSort().sort(dataset);
 		//		printArray(output);
@@ -39,7 +40,6 @@ public class Sorting {
 	}
 
 	public Sorting() {
-		newDataset();
 	}
 
 	static void sortDataset() {
@@ -81,34 +81,48 @@ public class Sorting {
 		double x = 0f;
 		for (Integer i : dataset.data) {
 			int height = (int) (range*i.intValue());
-			g.fillRect((int)(x+step/2), frame.getHeight()-height, (int)step, height); 
+			g.fillRect((int)(x+step/2), frame.getHeight()-height, 
+					(int)step, height); 
 			x += step;
 		}
-
-		//		drawSwapLines(g,1,2);
+		drawSwapLines(g,dataset);
 	}
 
 	public static void printArray(final ArrayList<Integer> array) {
-		for (int i = 0; i < array.size() ; i++) {
-			System.out.print(array.get(i) + ",");
-		}
-		System.out.println();
+//		for (int i = 0; i < array.size() ; i++) {
+//			System.out.print(array.get(i) + ",");
+//		}
+//		System.out.println();
 	}
 
 	public static void drawSwapLines(Graphics g, DataSet dataset) {
-		g.setColor(Color.BLACK);
+		System.out.println("DSL:" + dataset.getSwapLow() + "," + dataset.getSwapHigh());
 
 		double step = ((double)frame.getWidth())/dataset.data.size();
 		double range = ((double)frame.getHeight())/dataset.getRange();
 
 		int low = dataset.getSwapLow();
 		int high = dataset.getSwapHigh();
+		int height = frame.getHeight();
 
-		g.fillRect((int)(low + step/2), frame.getHeight() - (int)(range*dataset.getSwapLow()), 
-				(int)step, dataset.data.get(low));
+ 		g.setColor(Color.BLACK);
+		g.fillRect(0,  
+				height - (int)(range*dataset.data.get(dataset.getPivot())),
+				(int)(step*(dataset.getPivot() + 0.5)), 1); 
 
-		g.fillRect((int)(high+ step/2), frame.getHeight() - (int)(range*dataset.getSwapHigh()), 
-				(int)step, dataset.data.get(high)); 
+ 		g.setColor(Color.GREEN);
+		g.fillRect((int)(step*(low + 0.5)), height - (int)(range*dataset.data.get(low)),
+				(int)step, height); 
+
+ 		g.setColor(Color.YELLOW);
+		g.fillRect((int)(step*(high+ 0.5)), height - (int)(range*dataset.data.get(high)),
+				(int)step, height); 
+
+		g.setColor(Color.BLACK);
+		g.fillRect((int)(step*(dataset.getPivot())), 
+				height - (int)(range*dataset.data.get(dataset.getPivot())),
+				1, height); 
+
 	}
 
 	static void newDataset() {

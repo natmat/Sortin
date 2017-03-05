@@ -9,6 +9,9 @@ public class DataSet {
 	private static int dataSize;
 	ArrayList<Integer> data;
 	private int swapLow;
+	private int swapHigh;
+	private int pivot;
+	private int range;
 
 	public int getSwapLow() {
 		return swapLow;
@@ -26,13 +29,11 @@ public class DataSet {
 		this.swapHigh = swapHigh;
 	}
 
-	private int swapHigh;
-	private int range;
-
 	public DataSet() {
 		range = RANGE_OF_DATASET;
 		swapLow = 0;
 		swapHigh = 0;
+		pivot = 0;
 	}
 	
 	public void newFixedDataset() {
@@ -63,5 +64,13 @@ public class DataSet {
 
 	public int getRange() {
 		return(range);
+	}
+
+	public int getPivot() {
+		return pivot;
+	}
+
+	public void setPivot(int pivot) {
+		this.pivot = pivot;
 	}
 }
