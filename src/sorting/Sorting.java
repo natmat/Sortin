@@ -17,7 +17,7 @@ public class Sorting {
 	private final static int SIZE_OF_DATASET = 100;
 	private static JFrame frame;
 	private static SortingPanel panel;
-	public final static int REFRESH_INTERVAL = 500; 
+	public final static int REFRESH_INTERVAL = 50; 
 	private static DataSet dataset;
 
 	public static void main(String[] args) 
@@ -121,7 +121,7 @@ public class Sorting {
 		g.setColor(Color.BLACK);
 		g.fillRect((int)(step*(dataset.getPivot())), 
 				height - (int)(range*dataset.data.get(dataset.getPivot())),
-				1, height); 
+				(int)step, height); 
 
 	}
 
@@ -129,6 +129,6 @@ public class Sorting {
 		dataset = new DataSet(SIZE_OF_DATASET);
 		dataset.newRandomSet();
 		refresh();
-	}		
+	}
 }
 

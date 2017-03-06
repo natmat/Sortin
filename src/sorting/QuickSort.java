@@ -27,15 +27,21 @@ public class QuickSort implements ISort {
 
 	protected static int partitionHoare(DataSet dataset, int first,int last){
 		final int pivot = dataset.data.get(last);
-		dataset.setPivot(pivot);
+		dataset.setPivot(last);
 
 		int leftCursor = first-1;
 		int rightCursor = last;
 
 		while(leftCursor < rightCursor) {
-			while (dataset.data.get(++leftCursor) < pivot);
+			while (dataset.data.get(++leftCursor) < pivot) {
+				dataset.setSwapLow(leftCursor);
+				Sorting.refresh();
+			};
 
-			while ((leftCursor < rightCursor) && (pivot < dataset.data.get(--rightCursor)));
+			while ((leftCursor < rightCursor) && (pivot < dataset.data.get(--rightCursor))) {
+				dataset.setSwapLow(rightCursor);
+				Sorting.refresh();
+			};
 
 			if (leftCursor >= rightCursor) {
 				swapArrayElements(dataset, leftCursor, last);
@@ -125,43 +131,6 @@ public class QuickSort implements ISort {
 			quicksort2(data, p, q-1);       // recursively sort a[p..q-1]
 			quicksort2(data, q+1, r);       // recursively sort a[q+1..r]
 		}
-	}
-
-	// Partition a[p..r] into subarrays a[p..q-1] and a[q+1..r], where p <= q <= r, and
-	// each element of a[p..q-1] is less than or equal to a[q], which is less than
-	// each element of a[q+1..r].
-	// Works by selecting the original value of a[r] as the pivot element and
-	// partitioning a[p..r] around the pivot.
-	// Returns the value of q that marks the partition.
-	protected int partition1(DataSet dataset, int p, int r) {
-		int pivot = dataset.data.get(r);        // the value we pivot around
-		int i = p - 1;                  // i is index into left side
-
-		// The following for loop maintains the following invariants:
-		// 1. Every element of a[p..i] is less than or equal to the pivot.
-		// 2. Every element of a[i+1..j-1] is greater than the pivot.
-		// 3. a[r] equals the pivot.
-		for (int j = p; j < r; j++) {   // j is index into right side
-			// Find out which side a[j] goes into.  If the left side, then we have
-			// to increment the size of the left side and then get a[j] into position i.
-			// If the right side, a[j] is already where we want it, so just incrementing
-			// j in the loop header suffices.
-			if (dataset.data.get(i) < pivot) { 	// which side does a[j] go into?
-				i++;                    // if left side, make it one larger...
-				swapArrayElements(dataset, i, j);          // ...and get a[j] into the left side
-			}
-		}
-
-		// We dropped out of the loop because j == r.  Every element of a[p..i]
-		// is less than or equal to the pivot, and every element of a[i+1..r-1] is
-		// greater than the pivot.  If we put the pivot into position i+1, then we
-		// have what we want: a[p..i] is less than or equal to the pivot, a[i+1]
-		// equals the pivot, and a[i+2..r] is greater than the pivot.
-		swapArrayElements(dataset, i+1, r);
-		Sorting.printArray(dataset.data);
-
-		// Return the index of where the pivot ended up.
-		return i+1;
 	}
 }
 
