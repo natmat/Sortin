@@ -33,15 +33,9 @@ public class QuickSort implements ISort {
 		int rightCursor = last;
 
 		while(leftCursor < rightCursor) {
-			while (dataset.data.get(++leftCursor) < pivot) {
-				dataset.setSwapLow(leftCursor);
-				Sorting.refresh();
-			};
+			while (dataset.data.get(++leftCursor) < pivot);
 
-			while ((leftCursor < rightCursor) && (pivot < dataset.data.get(--rightCursor))) {
-				dataset.setSwapLow(rightCursor);
-				Sorting.refresh();
-			};
+			while ((leftCursor < rightCursor) && (pivot < dataset.data.get(--rightCursor)));
 
 			if (leftCursor >= rightCursor) {
 				swapArrayElements(dataset, leftCursor, last);
