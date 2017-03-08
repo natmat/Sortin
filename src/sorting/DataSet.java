@@ -73,4 +73,18 @@ public class DataSet {
 	public void setPivot(int pivot) {
 		this.pivot = pivot;
 	}
+	
+
+	public void swapArrayElements(int i, int j) {
+//		System.out.println("Swap:" + i + "," + j);
+		setSwapLow(i);
+		setSwapHigh(j);
+		
+		Sorting.refresh();
+		int tmp = data.get(i);
+		data.set(i, data.get(j));
+		data.set(j, tmp);
+
+		Sorting.pause();
+	}
 }

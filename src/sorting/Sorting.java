@@ -13,7 +13,7 @@ public class Sorting {
 	private final static int SIZE_OF_DATASET = 100;
 	private static JFrame frame;
 	private static SortingPanel panel;
-	public final static int REFRESH_INTERVAL = 50; 
+	public final static int REFRESH_INTERVAL = 2; 
 	private static DataSet dataset;
 
 	public static void main(String[] args) 
@@ -44,7 +44,8 @@ public class Sorting {
 
 			@Override
 			public void run() {
-				DataSet output = new QuickSort().sort(dataset);
+//				DataSet output = new QuickSort().sort(dataset);
+				DataSet output = new BubbleSort().sort(dataset);
 				printArray(output.data);
 			}
 		}).start();
@@ -92,8 +93,6 @@ public class Sorting {
 	}
 
 	public static void drawSwapLines(Graphics g, DataSet dataset) {
-		System.out.println("DSL:" + dataset.getSwapLow() + "," + dataset.getSwapHigh());
-
 		double step = ((double)frame.getWidth())/dataset.data.size();
 		double range = ((double)frame.getHeight())/dataset.getRange();
 
@@ -126,5 +125,16 @@ public class Sorting {
 		dataset.newRandomSet();
 		refresh();
 	}
+	
+	public static void pause() {
+		Sorting.refresh();
+		try {
+			Thread.sleep(Sorting.REFRESH_INTERVAL);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
 

@@ -11,7 +11,7 @@ public class QuickSort implements ISort {
 		
 		return(output);
 	}
-
+	
 	private void quicksortHoare(DataSet dataset, int first, int last) {
 		Sorting.printArray(dataset.data);
 		if (first < last) {
@@ -34,37 +34,15 @@ public class QuickSort implements ISort {
 			while ((leftCursor < rightCursor) && (pivot < dataset.data.get(--rightCursor)));
 
 			if (leftCursor >= rightCursor) {
-				swapArrayElements(dataset, leftCursor, last);
+				dataset.swapArrayElements(leftCursor, last);
 				break;
 			}
 
-			swapArrayElements(dataset, leftCursor, rightCursor);
+			dataset.swapArrayElements(leftCursor, rightCursor);
 			Sorting.printArray(dataset.data);
 		}
 		
 		return(rightCursor);
-	}
-
-	private static void pause(DataSet dataset, int i, int j) {
-		Sorting.refresh();
-		try {
-			Thread.sleep(Sorting.REFRESH_INTERVAL);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private static void swapArrayElements(DataSet dataset, int i, int j) {
-		dataset.setSwapLow(i);
-		dataset.setSwapHigh(j);
-		
-		Sorting.refresh();
-		int tmp = dataset.data.get(i);
-		dataset.data.set(i, dataset.data.get(j));
-		dataset.data.set(j, tmp);
-
-		pause(dataset, i, j);
 	}
 }
 
