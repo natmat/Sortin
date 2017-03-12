@@ -2,7 +2,6 @@ package sorting;
 
 public class BubbleSort implements ISort {
 
-	@Override
 	public DataSet sort(DataSet dataset) {
 		DataSet output = dataset;
 		if (dataset.data.size() < 2) {
@@ -18,5 +17,4 @@ public class BubbleSort implements ISort {
 		}		
 		return(output);
 	}
-
 }

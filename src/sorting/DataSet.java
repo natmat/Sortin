@@ -12,6 +12,7 @@ public class DataSet {
 	private int swapHigh;
 	private int pivot;
 	private int range;
+	private int swapCount;
 
 	public int getSwapLow() {
 		return swapLow;
@@ -43,6 +44,7 @@ public class DataSet {
 	
 	public DataSet(int size) {
 		this();
+		swapCount = 0;
 		dataSize = size;
 		data = new ArrayList<>(dataSize);
 		newRandomSet();
@@ -76,7 +78,7 @@ public class DataSet {
 	
 
 	public void swapArrayElements(int i, int j) {
-//		System.out.println("Swap:" + i + "," + j);
+		System.out.println("Swap:" + ++swapCount);
 		setSwapLow(i);
 		setSwapHigh(j);
 		
@@ -84,7 +86,10 @@ public class DataSet {
 		int tmp = data.get(i);
 		data.set(i, data.get(j));
 		data.set(j, tmp);
+	}
 
+	public void refresh() {
+		Sorting.refresh();
 		Sorting.pause();
 	}
 }

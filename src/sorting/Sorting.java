@@ -13,7 +13,7 @@ public class Sorting {
 	private final static int SIZE_OF_DATASET = 100;
 	private static JFrame frame;
 	private static SortingPanel panel;
-	public final static int REFRESH_INTERVAL = 2; 
+	public final static int REFRESH_INTERVAL = 20; 
 	private static DataSet dataset;
 
 	public static void main(String[] args) 
@@ -25,7 +25,7 @@ public class Sorting {
 			}
 		});
 
-//		Sorting s = new Sorting();
+		//		Sorting s = new Sorting();
 		Sorting.newDataset();
 
 		//		output = new InsertionSort().sort(dataset);
@@ -38,14 +38,24 @@ public class Sorting {
 	public Sorting() {
 	}
 
-	static void sortDataset() {
+	static void sortDataset(int sort) {
 		System.out.println("Sort the dataset");
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-//				DataSet output = new QuickSort().sort(dataset);
-				DataSet output = new BubbleSort().sort(dataset);
+				DataSet output = null;
+				switch(sort) {
+				case 0:
+					output = new QuickSort().sort(dataset);
+					break;
+				case 1:
+					output = new BubbleSort().sort(dataset);
+					break;
+				case 2:
+					output = new InsertionSort().sort(dataset);
+					break;
+				}
 				printArray(output.data);
 			}
 		}).start();
@@ -53,6 +63,7 @@ public class Sorting {
 
 	public static void refresh() {
 		panel.repaint();
+		Sorting.pause();
 	}
 
 	private static void createAndShowGUI() {
@@ -75,7 +86,7 @@ public class Sorting {
 		double step = ((double)frame.getWidth())/dataset.data.size();
 		double range = ((double)frame.getHeight())/dataset.getRange();
 
-		double x = 0f;
+		double x = 0f;		
 		for (Integer i : dataset.data) {
 			int height = (int) (range*i.intValue());
 			g.fillRect((int)(x+step/2), frame.getHeight()-height, 
@@ -86,10 +97,10 @@ public class Sorting {
 	}
 
 	public static void printArray(final ArrayList<Integer> array) {
-//		for (int i = 0; i < array.size() ; i++) {
-//			System.out.print(array.get(i) + ",");
-//		}
-//		System.out.println();
+		for (int i = 0; i < array.size() ; i++) {
+			System.out.print(array.get(i) + ",");
+		}
+		System.out.println();
 	}
 
 	public static void drawSwapLines(Graphics g, DataSet dataset) {
@@ -100,16 +111,16 @@ public class Sorting {
 		int high = dataset.getSwapHigh();
 		int height = frame.getHeight();
 
- 		g.setColor(Color.BLACK);
+		g.setColor(Color.BLACK);
 		g.fillRect(0,  
 				height - (int)(range*dataset.data.get(dataset.getPivot())),
 				(int)(step*(dataset.getPivot() + 0.5)), 1); 
 
- 		g.setColor(Color.GREEN);
+		g.setColor(Color.GREEN);
 		g.fillRect((int)(step*(low + 0.5)), height - (int)(range*dataset.data.get(low)),
 				(int)step, height); 
 
- 		g.setColor(Color.YELLOW);
+		g.setColor(Color.YELLOW);
 		g.fillRect((int)(step*(high+ 0.5)), height - (int)(range*dataset.data.get(high)),
 				(int)step, height); 
 
@@ -125,9 +136,8 @@ public class Sorting {
 		dataset.newRandomSet();
 		refresh();
 	}
-	
+
 	public static void pause() {
-		Sorting.refresh();
 		try {
 			Thread.sleep(Sorting.REFRESH_INTERVAL);
 		} catch (InterruptedException e) {

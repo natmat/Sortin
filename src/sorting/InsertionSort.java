@@ -1,30 +1,40 @@
 package sorting;
 
 public class InsertionSort implements ISort {
-	
-	private static DataSet dataset = null;
 
-	@Override
-	public DataSet sort(final DataSet inDataset) throws InterruptedException {
-		dataset = inDataset;
-		for (int i = 1 ; i < dataset.data.size() ; i++) {
+	public DataSet sort1(DataSet dataset) {
+		for (int i = 1 ; i < dataset.data.size() ; i++ ) {
+			dataset.setPivot(i);
 			int j = i;
-			while (j > 0) {
-				if (dataset.data.get(j) < dataset.data.get(j-1)) {
-					swapWithPrevious(j);
-				}
+			while ((j > 0) && (dataset.data.get(j) < dataset.data.get(j-1))) {
+				dataset.swapArrayElements(j-1, j);
 				j--;
 			}
-			Thread.sleep(Sorting.REFRESH_INTERVAL);
-			Sorting.refresh();
 		}
-		Sorting.refresh();
-		return(dataset);
+		return dataset;
 	}
 
-	private void swapWithPrevious(int j) {
-		int tmp = dataset.data.get(j);
-		dataset.data.set(j,  dataset.data.get(j-1));
-		dataset.data.set(j-1, tmp);
+	public DataSet sort(DataSet dataset) {
+		for (int i = 1 ; i < dataset.data.size() ; i++ ) {
+			System.out.print(i + ":");
+			Sorting.printArray(dataset.data);
+			dataset.setPivot(i);
+			int j = i;
+			while ((j > 0) && (dataset.data.get(j-1) > dataset.data.get(j))) {
+				j--;
+			}
+			if (j == i) {
+				// It's greater
+				continue;
+			}
+			else {
+				int insert = dataset.data.get(i);
+				System.out.println("Inset:" + insert + " at " + j);
+				dataset.data.remove(i);
+				dataset.data.add(j, insert);
+			}
+			Sorting.refresh();
+		}
+		return dataset;
 	}
 }

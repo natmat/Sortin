@@ -29,10 +29,12 @@ public class SortingPanel extends JPanel {
 	private static class SortButton extends JButton {
 		private static final long serialVersionUID = 1L;
 		private static boolean state;
+		private static int sort; 
 
 		public SortButton() {
 			state = false;
 			setText("New Data");
+			sort = 0;
 		}
 
 		private void pressed() {
@@ -44,7 +46,8 @@ public class SortingPanel extends JPanel {
 			else {
 				setText("New Data");
 				state = false;
-				Sorting.sortDataset();
+				Sorting.sortDataset(sort++);
+				sort = (sort > 2) ? 0 : sort;
 			}
 		}
 	}
