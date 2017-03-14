@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 
 public class Sorting {	
 	private final static int SIZE_OF_DATASET = 100;
-	private static JFrame frame;
+	private static SortingFrame sortingFrame;
 	private static SortingPanel panel;
 	public final static int REFRESH_INTERVAL = 20; 
 	private static DataSet dataset;
@@ -50,8 +50,8 @@ public class Sorting {
 					output = new QuickSort().sort(dataset);
 					break;
 				case 1:
-					output = new BubbleSort().sort(dataset);
-					break;
+//					output = new BubbleSort().sort(dataset);
+//					break;
 				case 2:
 					output = new InsertionSort().sort(dataset);
 					break;
@@ -68,28 +68,28 @@ public class Sorting {
 
 	private static void createAndShowGUI() {
 		System.out.println("createAndShowGUI");
-		frame = new JFrame("Sort in action");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
+		sortingFrame = new SortingFrame("Sort in action");
+		sortingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		sortingFrame.setLocationRelativeTo(null);
 		Dimension dm = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setLocation((int)(dm.getWidth() - 800)/2, (int)(dm.getHeight() - 200)/2);
+		sortingFrame.setLocation((int)(dm.getWidth() - 800)/2, (int)(dm.getHeight() - 200)/2);
 
 		panel = new SortingPanel();
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
+		sortingFrame.add(panel);
+		sortingFrame.pack();
+		sortingFrame.setVisible(true);
 	}
 
 	static void drawHistogram(Graphics g) {
 		g.setColor(Color.RED);
 
-		double step = ((double)frame.getWidth())/dataset.data.size();
-		double range = ((double)frame.getHeight())/dataset.getRange();
+		double step = ((double)sortingFrame.getWidth())/dataset.data.size();
+		double range = ((double)sortingFrame.getHeight())/dataset.getRange();
 
 		double x = 0f;		
 		for (Integer i : dataset.data) {
 			int height = (int) (range*i.intValue());
-			g.fillRect((int)(x+step/2), frame.getHeight()-height, 
+			g.fillRect((int)(x+step/2), sortingFrame.getHeight()-height, 
 					(int)step, height); 
 			x += step;
 		}
@@ -104,12 +104,12 @@ public class Sorting {
 	}
 
 	public static void drawSwapLines(Graphics g, DataSet dataset) {
-		double step = ((double)frame.getWidth())/dataset.data.size();
-		double range = ((double)frame.getHeight())/dataset.getRange();
+		double step = ((double)sortingFrame.getWidth())/dataset.data.size();
+		double range = ((double)sortingFrame.getHeight())/dataset.getRange();
 
 		int low = dataset.getSwapLow();
 		int high = dataset.getSwapHigh();
-		int height = frame.getHeight();
+		int height = sortingFrame.getHeight();
 
 		g.setColor(Color.BLACK);
 		g.fillRect(0,  
