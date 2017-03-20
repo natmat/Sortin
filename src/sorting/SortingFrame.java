@@ -1,13 +1,23 @@
 package sorting;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class SortingFrame extends JFrame {
 	public static void main(String[] args) {
+		String[] a = new String[] {"AB","BC","CD","AE"};
+		ArrayList<String> al = new ArrayList<String>(Arrays.asList(a));
+		System.out.println("AB:" + Arrays.asList(a).contains("AB"));
+		System.out.println("AB:" + al.contains("AB"));
+	
 		SortingFrame frame = new SortingFrame();
 		frame.setVisible(true);
 	}
@@ -38,8 +48,9 @@ public class SortingFrame extends JFrame {
 		
 		for (int i = 0 ; i < 4 ; i++) {
 			JPanel p = new JPanel();
+			p.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			
-			p.setSize(100, 100);
+			p.setPreferredSize(new Dimension(200, 200));
 			this.add(p);
 		}
 
@@ -48,7 +59,7 @@ public class SortingFrame extends JFrame {
 //		sortingFrame.add(panel);
 //		sortingFrame.pack();
 //		sortingFrame.setVisible(true);
-//
 
+		pack();
 	}
 }
