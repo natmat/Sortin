@@ -1,18 +1,25 @@
 package sorting;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class SortingPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	SortButton sortButton;
+	Dimension dimension;
 
-	public SortingPanel() {	
+	public SortingPanel(final Dimension inDimension) {
+		this.dimension = new Dimension(inDimension);
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));			
+		this.setPreferredSize(new Dimension((int)(this.dimension.getWidth()/4), (int)(this.dimension.getHeight()/4)));
+
 		this.setPreferredSize(new Dimension(1000, 800));
 		sortButton = new SortButton();
 		sortButton.addActionListener(new ActionListener() {
@@ -37,7 +44,7 @@ public class SortingPanel extends JPanel {
 			sort = 0;
 		}
 
-		private void pressed() {
+			private void pressed() {
 			if (state == false) {				
 				setText("Sort");
 				state = true;

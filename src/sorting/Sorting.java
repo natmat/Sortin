@@ -1,12 +1,9 @@
 package sorting;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class Sorting {	
@@ -69,13 +66,6 @@ public class Sorting {
 	private static void createAndShowGUI() {
 		System.out.println("createAndShowGUI");
 		sortingFrame = new SortingFrame("Sort in action");
-		sortingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		sortingFrame.setLocationRelativeTo(null);
-		Dimension dm = Toolkit.getDefaultToolkit().getScreenSize();
-		sortingFrame.setLocation((int)(dm.getWidth() - 800)/2, (int)(dm.getHeight() - 200)/2);
-
-		panel = new SortingPanel();
-		sortingFrame.add(panel);
 		sortingFrame.pack();
 		sortingFrame.setVisible(true);
 	}
