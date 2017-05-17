@@ -11,10 +11,9 @@ public class Sorting {
 	private static SortingFrame sortingFrame;
 	private static SortingPanel panel;
 	public final static int REFRESH_INTERVAL = 20; 
-	private static DataSet dataset;
+	private static DataSet[] dataset;
 
-	public static void main(String[] args) 
-			throws InterruptedException, InvocationTargetException {
+	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 		SwingUtilities.invokeAndWait(new Runnable() {
 			@Override
 			public void run() {
@@ -44,13 +43,13 @@ public class Sorting {
 				DataSet output = null;
 				switch(sort) {
 				case 0:
-					output = new QuickSort().sort(dataset);
+					output = new QuickSort().sort(dataset[sort]);
 					break;
 				case 1:
 //					output = new BubbleSort().sort(dataset);
 //					break;
 				case 2:
-					output = new InsertionSort().sort(dataset);
+					output = new InsertionSort().sort(dataset[sort]);
 					break;
 				}
 				printArray(output.data);
@@ -73,17 +72,16 @@ public class Sorting {
 	static void drawHistogram(Graphics g) {
 		g.setColor(Color.RED);
 
-		double step = ((double)sortingFrame.getWidth())/dataset.data.size();
-		double range = ((double)sortingFrame.getHeight())/dataset.getRange();
+		double step = ((double)sortingFrame.getWidth())/dataset[0].data.size();
+		double range = ((double)sortingFrame.getHeight())/dataset[0].getRange();
 
 		double x = 0f;		
-		for (Integer i : dataset.data) {
+		for (Integer i : dataset[0].data) {
 			int height = (int) (range*i.intValue());
-			g.fillRect((int)(x+step/2), sortingFrame.getHeight()-height, 
-					(int)step, height); 
+			g.fillRect((int)(x+step/2), sortingFrame.getHeight()-height, (int)step, height); 
 			x += step;
 		}
-		drawSwapLines(g,dataset);
+		drawSwapLines(g,dataset[0]);
 	}
 
 	public static void printArray(final ArrayList<Integer> array) {
@@ -121,9 +119,15 @@ public class Sorting {
 
 	}
 
+	/**
+	 * Create
+	 */
 	static void newDataset() {
-		dataset = new DataSet(SIZE_OF_DATASET);
-		dataset.newRandomSet();
+		DataSet masterDataSet = new DataSet(SIZE_OF_DATASET);
+		masterDataSet.newRandomSet();
+		for (int i = 0 ; i < SIZE_OF_DATASET ; i++) {
+			dataset[i] = new DataSet(masterDataSet);
+		}
 		refresh();
 	}
 

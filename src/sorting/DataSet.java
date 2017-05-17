@@ -2,6 +2,7 @@ package sorting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class DataSet {
@@ -54,6 +55,13 @@ public class DataSet {
 		this();
 	}
 
+	public DataSet(final DataSet copyDataSet) {
+		data = new ArrayList<>(copyDataSet.data.size());
+		for (Integer item : copyDataSet.data) {
+			data.add(item); 
+		}
+	}
+
 	public void newRandomSet() {
 		data.clear();
 		Random rand = new Random();
@@ -91,5 +99,19 @@ public class DataSet {
 	public void refresh() {
 		Sorting.refresh();
 		Sorting.pause();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		DataSet o = new DataSet(DataSet.dataSize);
+		List<Integer> clone = new ArrayList<>(this.data.size());
+		for (int i : this.data) {
+			clone.add(i);
+		}
+		return(clone);
 	}
 }
